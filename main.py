@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, Query
 from pydantic import BaseModel
 import random
 
@@ -26,7 +26,6 @@ async def get_random_fact(id: int = None):
         for fact in facts:
             if fact.id == id:
                 return fact
-        raise HTTPException(status_code=404, detail="Fact not found")
     else:
         return random.choice(facts)
 
@@ -35,7 +34,6 @@ async def get_fact_by_id(id: int):
     for fact in facts:
         if fact.id == id:
             return fact
-    raise HTTPException(status_code=404, detail="Fact not found")
 
 @app.get("/fact/query")
 async def get_fact_by_query_id(id: int = Query(..., title="The ID of the fact to retrieve")):
